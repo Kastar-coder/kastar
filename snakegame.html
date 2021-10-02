@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        body{
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas{
+            box-shadow: rgb(0, 0, 0) 20px 20px 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Snake</h1>
+    <canvas id="game" width="400" height="400"></canvas>
+    <script>
+        const canvas=document.getElementById("game");
+        const ctx=canvas.getContext("2d");
+
+      class snakePart{
+            constructor(x,y){
+               this.x = x;
+               this.y = y;
+            }
+        }
+
+        const snakeParts=[];
+        var tailLength=0;
+        let colors=["blue","yellow","red","brown","white","purple","violet","cyan","silver","pink","moroon"]
+        let px=10;
+        let py=10;
+        let speed=7;
+        let moveX=1;
+        let moveY=0;
+        let radian=20;
+        let tailSize=canvas.width/radian-2;
+        let Vx=10;
+        let Vy=10;
+        let scores=0;
+        let color;
+        
+        
+        
+        document.body.addEventListener('keydown',moveT);
+        function drawGame(){
+            
+            snakePosition()
+            let result=gameIsOver();
+            if(result){
+                return;
+            }
+            screen1();
+            snakeBody();
+            eaten();
+            snakeBodyVillein();
+            Score();
+
+            setTimeout(drawGame,1000/speed);
+            
+        }
+        
+        function screen1(){
+            ctx.fillStyle="purple";
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.fill();
+        }
+        function snakePosition(){
+            px=px+moveX;
+            py=py+moveY;
+        }
+        function moveT(event){
+            
+            if(event.keyCode==37){
+                if(moveX==1){
+                    return;
+                }
+                moveX=-1;
+                moveY=0;
+            }
+            if(event.keyCode==38){
+                if(moveY==1){
+                    return;
+                }
+                moveX=0;
+                moveY=-1;
+            }
+            if(event.keyCode==39){
+                if(moveX==-1){
+                    return;
+                }
+                moveX=1;
+                moveY=0;
+            }
+            if(event.keyCode==40){
+                if(moveY==-1){
+                    return;
+                }
+                moveX=0;
+                moveY=1;
+            }
+        }
+        function eaten()
+        {
+            
+            if(Vx===px && Vy==py){
+                Vx=Math.floor(Math.random()*radian);
+                Vy=Math.floor(Math.random()*radian);
+                scores++;
+                tailLength++;
+                
+            }
+            
+            
+        }
+        function gameIsOver(){
+            let gameOver=false;
+            if(px < 0){
+                gameOver=true;
+            }
+            if(py < 0){
+                gameOver=true;
+            }
+            if(px === radian){
+                gameOver=true;
+            }
+            if(py === radian){
+                gameOver=true;
+            }
+            if(gameOver){
+                ctx.fillStyle="white";
+                ctx.font="60px verdana";
+                ctx.fillText("Game Over!",canvas.width/60,canvas.height/2);
+            }
+            return gameOver;
+        }
+        function snakeBodyVillein(){
+            
+            ctx.fillStyle="red";
+            ctx.fillRect(Vx*radian,Vy*radian,tailSize,tailSize);
+            ctx.fill();
+        }
+        function snakeBody(){
+            ctx.fillStyle="blue";
+            for(let i=0; i < snakeParts.length;i++){
+                
+                let part=snakeParts[i];
+                
+                ctx.fillRect(part.x*radian,part.y*radian,tailSize,tailSize);
+                ctx.fill();
+            }
+            snakeParts.push(new snakePart(px,py));
+            
+            while(snakeParts.length > tailLength){
+                snakeParts.shift();
+            }
+
+            ctx.fillStyle="green";
+            ctx.fillRect(px*radian,py*radian,tailSize,tailSize);
+            ctx.fill();
+
+        }
+        function Score(){
+            ctx.fillStyle="white";
+            ctx.font="10px Verdana";
+            ctx.fillText("SCORES: "+scores,canvas.width-70,10)
+            
+            ctx.fill();
+            if(scores==6){
+                speed=10;
+            }
+
+        }
+        drawGame();
+        document.body.addEventListener("keydown",moveT);
+        
+
+    </script>

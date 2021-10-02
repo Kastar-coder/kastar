@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <style>
+        body{
+            background-color:rgb(25, 218, 128);
+        }
+        .number,.operator,.empty{
+            width: 80px;
+            height: 50px;
+            font-size: large;
+            
+        }
+        .number:hover,.empty:hover,.operator:hover{
+            background-color: rgb(184, 116, 15);
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h4 style="text-align: center">CODE WITH KASTAR</h4>
+        <button class="number" id="zero">0</button>
+        <button class="number" id="one">1</button>
+        <button class="number" id="two">2</button>
+        <button class="number" id="three">3</button>
+        <button class="number" id="four">4</button>
+        <button class="number" id="five">5</button>
+        <button class="number" id="six">6</button>
+        <button class="number" id="seven">7</button>
+        <button class="number" id="eight">8</button>
+        <button class="number" id="nine">9</button>
+        
+        <button class="operator" id="plus">+</button>
+        <button class="operator" id="minus">-</button>
+        <button class="operator" id="division">/</button>
+        <button class="operator" id="multply">*</button>
+        <button class="operator" id="equal">=</button>
+        <button class="operator" id="point">.</button>
+        <button class="empty" id="remove">DEL</button>
+        <div id="withk">
+            <h3 style="text-align: center">MADE BY KASTAR</h3>
+        </div>
+        <div id="screen">
+            <h1 id="output"></h1>
+            <h1 id="response" style="text-align: right; padding-top: 25px;"></h1>
+        </div>
+    </div>
+    <script>
+        //calculator body
+        let x=document.getElementById("container");
+        x.style.position="absolute";
+        x.style.top="70px";
+        x.style.left="300px";
+        x.style.backgroundColor="brown";
+        x.style.width="330px";
+        x.style.height="450px";
+        
+        x.style.borderRadius="50px 50px 0px 0px";
+        // Positioning of buttons
+        // left side
+        let point=document.getElementById("point");
+        point.style.position="absolute";
+        point.style.bottom="0px";
+        point.style.left="1px";
+
+        let one=document.getElementById("one");
+        one.style.position="absolute";
+        one.style.bottom="51px";
+        one.style.left="1px";
+
+        let four=document.getElementById("four");
+        four.style.position="absolute";
+        four.style.bottom="102px";
+        four.style.left="1px";
+
+        let seven=document.getElementById("seven");
+        seven.style.position="absolute";
+        seven.style.bottom="154px";
+        seven.style.left="1px";
+
+        // middle side
+        let zero=document.getElementById("zero");
+        zero.style.position="absolute";
+        zero.style.bottom="0px";
+        zero.style.left="82px";
+
+        let two=document.getElementById("two");
+        two.style.position="absolute";
+        two.style.bottom="51px";
+        two.style.left="82px";
+
+        let five=document.getElementById("five");
+        five.style.position="absolute";
+        five.style.bottom="102px";
+        five.style.left="82px";
+
+        let eight=document.getElementById("eight");
+        eight.style.position="absolute";
+        eight.style.bottom="154px";
+        eight.style.left="82px";
+
+        // Pre-right side
+        let equal=document.getElementById("equal");
+        equal.style.position="absolute";
+        equal.style.bottom="0px";
+        equal.style.left="164px";
+
+        let three=document.getElementById("three");
+        three.style.position="absolute";
+        three.style.bottom="51px";
+        three.style.left="164px";
+
+        let six=document.getElementById("six");
+        six.style.position="absolute";
+        six.style.bottom="102px";
+        six.style.left="164px";
+
+        let nine=document.getElementById("nine");
+        nine.style.position="absolute";
+        nine.style.bottom="154px";
+        nine.style.left="164px";
+
+        
+        
+        // right side
+        let division=document.getElementById("division");
+        division.style.position="absolute";
+        division.style.bottom="0px";
+        division.style.left="248px";
+
+        let plus=document.getElementById("plus");
+        plus.style.position="absolute";
+        plus.style.bottom="51px";
+        plus.style.left="248px";
+
+        let minus=document.getElementById("minus");
+        minus.style.position="absolute";
+        minus.style.bottom="102px";
+        minus.style.left="248px";
+
+        let multply=document.getElementById("multply");
+        multply.style.position="absolute";
+        multply.style.bottom="154px";
+        multply.style.left="248px";
+
+        let remove=document.getElementById("remove");
+        remove.style.position="absolute";
+        remove.style.bottom="206px";
+        remove.style.left="248px";
+        
+        // name of creator
+        let kastar=document.getElementById("withk");
+        kastar.style.backgroundColor="green";
+        kastar.style.position="absolute";
+        kastar.style.left="2px";
+        kastar.style.top="195px";
+        kastar.style.width="242px";
+        kastar.style.height="50px";
+        kastar.style.color="black"
+        
+
+        // screen of calculator
+        let screen=document.getElementById("screen");
+        screen.style.backgroundColor="rgb(114, 110, 105)";
+        screen.style.position="absolute";
+        screen.style.left="3px";
+        screen.style.top="50px";
+        screen.style.width="323px";
+        screen.style.height="143px";
+        screen.style.color="black"
+
+        // this is backend parts the way calculator will be operating
+        
+        function output(){
+          
+          let input=event.target.innerText;
+          result(input);
+
+          
+            }
+
+      
+        function result(value){
+            
+            let out=document.getElementById("output");
+            let response=document.getElementById("response");
+
+            let current=out.innerHTML;
+            
+            
+               let currents=0;
+           
+               currents=value;
+            if(currents !="=" && currents !="DEL"){
+                    
+                    out.innerHTML=current+value;
+                    
+                    }
+
+            else if(currents==="DEL"){
+                out.innerHTML=out.innerHTML.slice(0,out.innerHTML.length-1);
+                response.innerHTML="";
+            }
+            else if(currents==="="){
+                respo=eval(out.innerHTML)
+                response.innerHTML=respo;
+            }
+            if(out.innerHTML.width==5){
+                out.innerHTML=out.innerHTML;
+            }
+        }
+        let button=document.getElementsByTagName("button");
+        for(var j=0;j < button.length;j++){
+            button[j].setAttribute("onclick","output()");
+        }
+       
+       
+        
+    
+        
+    </script>
+</body>
+</html>
